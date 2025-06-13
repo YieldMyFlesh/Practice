@@ -1,14 +1,11 @@
 from fastapi import FastAPI, Query, HTTPException
 from yt_dlp import YoutubeDL
-from fastapi import FastAPI
 
 app = FastAPI()
 
 @app.get("/")
 async def root():
     return {"message": "OK"}
-    
-app = FastAPI()
 
 @app.get("/search")
 def search(q: str = Query(..., min_length=1)):
