@@ -52,7 +52,7 @@ async def handle_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
 
     await update.message.reply_text(
-        "🔍 Ось що я знайшов:",
+        "Ось що я знайшов:",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
