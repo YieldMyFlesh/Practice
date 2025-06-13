@@ -1,13 +1,18 @@
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI, Query
 from yt_dlp import YoutubeDL
 
 app = FastAPI()
 
 @app.get("/search")
-def search(q: str = Query(..., min_length=1)):
-    ydl_opts = {'quiet': True, 'noplaylist': True, 'extract_flat': False}
-    try:
-        with YoutubeDL(ydl_opts) as ydl:
+def search_music(q: str = Query(..., description="Назва або посилання на пісню")):
+    ydl_opts = {
+        'quiet': True,
+        'skip_download': True,
+        'extract_flat': False,
+    }
+
+    with YoutubeDL(ydl_opts) as ydl:
+        try:
             if q.startswith("http"):
                 info = ydl.extract_info(q, download=False)
                 results = [{
@@ -16,24 +21,16 @@ def search(q: str = Query(..., min_length=1)):
                     "duration": info.get("duration", 0)
                 }]
             else:
-                search_result = ydl.extract_info(f"ytsearch10:{q}", download=False)
-                if not search_result or "entries" not in search_result:
-                    results = []
-                else:
-                    results = []
-                    for entry in search_result.get("entries", []):
-                        if entry is None:
-                            continue
-                        title = entry.get("title")
-                        video_id = entry.get("id")
-                        duration = entry.get("duration", 0)
-                        if title and video_id:
-                            results.append({
-                                "title": title,
-                                "link": f"https://www.youtube.com/watch?v={video_id}",
-                                "duration": duration
-                            })
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Ошибка yt_dlp: {e}")
-
-    return {"results": results}
+                search_url = f"ytsearch5:{q}"
+                info = ydl.extract_info(search_url, download=False)
+                entries = info.get('entries', [])
+                results = []
+                for entry in entries:
+                    results.append({
+                        "title": entry.get("title"),
+                        "link": f"https://www.youtube.com/watch?v={entry.get('id')}",
+                        "duration": entry.get("duration", 0)
+                    })
+            return {"query": q, "results": results}
+        except Exception as e:
+            return {"error": str(e)}
