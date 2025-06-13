@@ -12,7 +12,7 @@ from telegram.ext import (
 from yt_dlp import YoutubeDL
 
 BOT_TOKEN = "7938805493:AAHtOYzKjKgMy_TqUCqrx-yLvBWBq0OtF8A"
-API_URL = "http://localhost:8000/search"
+API_URL = "http://web-production-528b1.up.railway.app/search"
 
 logging.basicConfig(level=logging.INFO)
 user_results = {}
