@@ -20,7 +20,7 @@ def format_duration(seconds):
     return f"{minutes}:{seconds:02}"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🎵 Введи назву пісні або посилання:")
+    await update.message.reply_text("Введи назву пісні або посилання:")
 
 async def handle_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.message.text
