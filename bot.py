@@ -37,7 +37,7 @@ async def handle_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
         results = data.get("results", [])
     except Exception as e:
         logging.error(f"[API ERROR] {e}")
-        await update.message.reply_text("⚠Помилка при зверненні до API.")
+        await update.message.reply_text("Помилка при зверненні до API.")
         return
 
     if not results:
@@ -66,7 +66,7 @@ async def handle_selection(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await download_and_send(query.message, context, track["link"], track["title"])
 
-async def download_and_send(message, context, link, title="🎶 Завантаження"):
+async def download_and_send(message, context, link, title="Завантаження"):
     safe_title = "".join(c for c in title if c.isalnum() or c in " _-").strip()
     output_template = safe_title
 
