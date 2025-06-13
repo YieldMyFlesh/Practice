@@ -3,6 +3,12 @@ from yt_dlp import YoutubeDL
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"status": "OK"}
+
+app = FastAPI()
+
 @app.get("/search")
 def search(q: str = Query(..., min_length=1)):
     ydl_opts = {'quiet': True, 'noplaylist': True, 'extract_flat': False}
