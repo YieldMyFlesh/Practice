@@ -1,8 +1,6 @@
 from fastapi import FastAPI, Query, HTTPException
 from yt_dlp import YoutubeDL
 
-app = FastAPI()
-
 @app.get("/")
 async def root():
     return {"status": "OK"}
