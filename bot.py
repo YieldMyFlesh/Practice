@@ -27,7 +27,7 @@ async def handle_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
 
     if query.startswith("http"):
-        await download_and_send(update, context, query, title="🎶 Твій трек")
+        await download_and_send(update, context, query, title="Твій трек")
         return
 
     try:
@@ -37,11 +37,11 @@ async def handle_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
         results = data.get("results", [])
     except Exception as e:
         logging.error(f"[API ERROR] {e}")
-        await update.message.reply_text("⚠️ Помилка при зверненні до API.")
+        await update.message.reply_text("⚠Помилка при зверненні до API.")
         return
 
     if not results:
-        await update.message.reply_text("😔 Нічого не знайдено.")
+        await update.message.reply_text("Нічого не знайдено.")
         return
 
     user_results[user_id] = results
@@ -70,7 +70,7 @@ async def download_and_send(message, context, link, title="🎶 Завантаж
     safe_title = "".join(c for c in title if c.isalnum() or c in " _-").strip()
     output_template = safe_title
 
-    await message.reply_text(f"🎧 Завантажую: {title}...")
+    await message.reply_text(f"Завантажую: {title}...")
 
     ydl_opts = {
         'format': 'bestaudio/best',
@@ -93,10 +93,10 @@ async def download_and_send(message, context, link, title="🎶 Завантаж
                     await message.reply_audio(f, title=title)
                 os.remove(filepath)
             else:
-                await message.reply_text("❌ Файл не знайдено після завантаження.")
+                await message.reply_text("Файл не знайдено після завантаження.")
     except Exception as e:
         logging.error(f"[YT-DLP ERROR] {e}")
-        await message.reply_text("❌ Помилка при завантаженні треку.")
+        await message.reply_text("Помилка при завантаженні треку.")
 
 def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
