@@ -8,7 +8,7 @@ from telegram.ext import (
 )
 from yt_dlp import YoutubeDL
 
-BOT_TOKEN = "7938805493:AAHtOYzKjKgMy_TqUCqrx-yLvBWBq0OtF8A"
+BOT_TOKEN = "Your-bot-Token"
 API_URL = "http://localhost:8000/search"
 
 logging.basicConfig(level=logging.INFO)
